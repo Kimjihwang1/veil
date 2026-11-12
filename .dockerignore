@@ -1,0 +1,13 @@
+.venv
+venv
+__pycache__
+*.pyc
+.git
+.env
+.env.*
+eval
+labeling
+videos*.txt
+*.dump
+tests
+.pytest_cache

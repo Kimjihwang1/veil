@@ -1,0 +1,241 @@
+{
+ "GET /api/channels": [
+  {
+   "id": 1,
+   "channel_title": "JTBC News"
+  },
+  {
+   "id": 2,
+   "channel_title": "엠뉴 | MBC경남 NEWS"
+  }
+ ],
+ "GET /api/channels/2/stats?period=all": {
+  "channel_id": 2,
+  "period": "all",
+  "total": 344,
+  "pending": 0,
+  "passed": 164,
+  "queued": 179,
+  "hidden": 1,
+  "unreviewed": 179,
+  "review_rate": 0.5203,
+  "by_category": {
+   "모욕": 112,
+   "혐오": 32,
+   "기타": 28,
+   "위협": 9,
+   "": 3
+  }
+ },
+ "GET /api/channels/2/queue?limit=5": [
+  {
+   "comment_id": 918,
+   "severity": "critical",
+   "channel_title": "엠뉴 | MBC경남 NEWS",
+   "video_id": "19nlpUp_XgY",
+   "video_title": "경남도의회 윤리위원장 이 대통령 비하 원색 표현.. 사퇴 논란 확산 (2026.9.2/뉴스데스크/MBC경남)",
+   "published_at": "2026-09-02T18:16:40",
+   "content": "이 부분 설명이 좀 이상한 것 같은데요",
+   "author_name": "사용자K",
+   "like_count": 1284,
+   "total_reply_count": 20,
+   "is_reply": false,
+   "parent_content": null,
+   "status": "queued",
+   "destination": "queue_judge",
+   "decided_by": "llm",
+   "label": "harmful",
+   "category": "위협",
+   "reason": "대상 없는 감탄이며 공격이 아니다",
+   "rule_value": null
+  },
+  {
+   "comment_id": 1042,
+   "severity": "critical",
+   "channel_title": "엠뉴 | MBC경남 NEWS",
+   "video_id": "19nlpUp_XgY",
+   "video_title": "경남도의회 윤리위원장 이 대통령 비하 원색 표현.. 사퇴 논란 확산 (2026.9.2/뉴스데스크/MBC경남)",
+   "published_at": "2026-09-02T18:31:38",
+   "content": "출처가 어디인지 알 수 있을까요?",
+   "author_name": "사용자V",
+   "like_count": 501,
+   "total_reply_count": 22,
+   "is_reply": false,
+   "parent_content": null,
+   "status": "queued",
+   "destination": "queue_judge",
+   "decided_by": "llm",
+   "label": "harmful",
+   "category": "혐오",
+   "reason": "집단을 싸잡아 비하한다",
+   "rule_value": null
+  },
+  {
+   "comment_id": 973,
+   "severity": "critical",
+   "channel_title": "엠뉴 | MBC경남 NEWS",
+   "video_id": "19nlpUp_XgY",
+   "video_title": "경남도의회 윤리위원장 이 대통령 비하 원색 표현.. 사퇴 논란 확산 (2026.9.2/뉴스데스크/MBC경남)",
+   "published_at": "2026-09-02T22:49:41",
+   "content": "출처가 어디인지 알 수 있을까요?",
+   "author_name": "사용자N",
+   "like_count": 250,
+   "total_reply_count": 0,
+   "is_reply": false,
+   "parent_content": null,
+   "status": "queued",
+   "destination": "queue_judge",
+   "decided_by": "llm",
+   "label": "harmful",
+   "category": "혐오",
+   "reason": "문맥이 부족해 확정할 수 없다",
+   "rule_value": null
+  },
+  {
+   "comment_id": 997,
+   "severity": "critical",
+   "channel_title": "엠뉴 | MBC경남 NEWS",
+   "video_id": "19nlpUp_XgY",
+   "video_title": "경남도의회 윤리위원장 이 대통령 비하 원색 표현.. 사퇴 논란 확산 (2026.9.2/뉴스데스크/MBC경남)",
+   "published_at": "2026-09-02T20:57:30",
+   "content": "저 사람 진짜 왜 저러냐",
+   "author_name": "사용자U",
+   "like_count": 190,
+   "total_reply_count": 0,
+   "is_reply": false,
+   "parent_content": null,
+   "status": "queued",
+   "destination": "queue_judge",
+   "decided_by": "llm",
+   "label": "harmful",
+   "category": "혐오",
+   "reason": "특정 인물을 겨냥한 비속어다",
+   "rule_value": null
+  },
+  {
+   "comment_id": 1003,
+   "severity": "critical",
+   "channel_title": "엠뉴 | MBC경남 NEWS",
+   "video_id": "19nlpUp_XgY",
+   "video_title": "경남도의회 윤리위원장 이 대통령 비하 원색 표현.. 사퇴 논란 확산 (2026.9.2/뉴스데스크/MBC경남)",
+   "published_at": "2026-09-02T20:55:09",
+   "content": "@사용자 그건 좀 아니지 않나",
+   "author_name": "사용자D",
+   "like_count": 173,
+   "total_reply_count": 1,
+   "is_reply": false,
+   "parent_content": null,
+   "status": "queued",
+   "destination": "queue_judge",
+   "decided_by": "llm",
+   "label": "harmful",
+   "category": "혐오",
+   "reason": "대상 없는 감탄이며 공격이 아니다",
+   "rule_value": null
+  }
+ ],
+ "GET /api/channels/2/hidden?limit=3": [
+  {
+   "comment_id": 940,
+   "severity": "high",
+   "channel_title": "엠뉴 | MBC경남 NEWS",
+   "video_id": "19nlpUp_XgY",
+   "video_title": "경남도의회 윤리위원장 이 대통령 비하 원색 표현.. 사퇴 논란 확산 (2026.9.2/뉴스데스크/MBC경남)",
+   "published_at": "2026-09-02T20:15:24",
+   "content": "잘 봤습니다 다음 영상도 기대할게요",
+   "author_name": "사용자K",
+   "like_count": 1160,
+   "total_reply_count": 5,
+   "is_reply": false,
+   "parent_content": null,
+   "status": "hidden",
+   "destination": "queue_judge",
+   "decided_by": "llm",
+   "label": "harmful",
+   "category": "모욕",
+   "reason": "특정 인물을 겨냥한 비속어다",
+   "rule_value": null
+  }
+ ],
+ "GET /api/channels/2/history": [
+  {
+   "action_id": 2,
+   "comment_id": 957,
+   "action": "keep",
+   "actor": "김지황",
+   "note": null,
+   "youtube_synced": false,
+   "executed_at": "2026-09-09T07:34:38.074985",
+   "content": "저 사람 진짜 왜 저러냐",
+   "author_name": "사용자K",
+   "category": "기타",
+   "reason": "집단을 싸잡아 비하한다"
+  },
+  {
+   "action_id": 1,
+   "comment_id": 940,
+   "action": "hide",
+   "actor": "김지황",
+   "note": "특정 인물을 겨냥한 비속어다",
+   "youtube_synced": false,
+   "executed_at": "2026-09-09T07:34:37.893148",
+   "content": "잘 봤습니다 다음 영상도 기대할게요",
+   "author_name": "사용자V",
+   "category": "모욕",
+   "reason": "특정 인물을 겨냥한 비속어다"
+  }
+ ],
+ "GET /api/channels/2/rules": [],
+ "POST /api/comments/{id}/action": {
+  "요청": {
+   "action": "hide",
+   "actor": "김지황",
+   "note": "특정 인물을 겨냥한 비속어다"
+  },
+  "응답": {
+   "comment_id": 940,
+   "action": "hide",
+   "status": "hidden",
+   "youtube_synced": false,
+   "reviewed_at": "2026-09-09T07:34:37"
+  }
+ },
+ "GET /api/comments/940/similar": [
+  {
+   "comment_id": 992,
+   "content": "출처가 어디인지 알 수 있을까요?",
+   "similarity": 0.7668,
+   "category": "모욕",
+   "status": "queued",
+   "reviewed": false,
+   "action": null,
+   "actor": null,
+   "note": null,
+   "executed_at": null
+  },
+  {
+   "comment_id": 1084,
+   "content": "이 부분 설명이 좀 이상한 것 같은데요",
+   "similarity": 0.6319,
+   "category": "정상",
+   "status": "passed",
+   "reviewed": false,
+   "action": null,
+   "actor": null,
+   "note": null,
+   "executed_at": null
+  },
+  {
+   "comment_id": 1093,
+   "content": "이 부분 설명이 좀 이상한 것 같은데요",
+   "similarity": 0.6248,
+   "category": "기타",
+   "status": "queued",
+   "reviewed": false,
+   "action": null,
+   "actor": null,
+   "note": null,
+   "executed_at": null
+  }
+ ]
+}

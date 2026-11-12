@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Environment
+.env
+.env.local
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# 수집·판별 산출물
+# 댓글 원문이 들어있다. 개인정보이고 30일 보관 정책 대상이라 레포에 넣지 않는다.
+eval/
+videos*.txt
+*.dump
+
+# 라벨링 시트
+# 댓글 원문과 사람이 매긴 정답이 들어있다. eval/ 과 같은 이유로 레포에 넣지 않는다.
+labeling/
+labeling_*/
+
+# 배포 서버의 비밀값
+deploy/.env
+
+# ML 학습 데이터·모델. 공개 데이터라 문제는 없지만 크고, scripts.train_prefilter 로 다시 만든다.
+ml/
+
+# 로컬 문서 · 백업. 코드가 쓰지 않고, 스크린샷엔 실제 채널 댓글이 보인다.
+app/static_backup_*/
+docs/screens/
+docs/발표/
+docs/산출물/
+docs/Taste-skill*/
+docs/*.pdf
+docs/멘토링_대본_*.md
+presentation/*.pptx

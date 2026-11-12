@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'IBM Plex Sans KR', 'Malgun Gothic', sans-serif; }
+  .opt-card { transition: border-color .15s ease, box-shadow .15s ease; cursor: pointer; }
+</style>
+</helmet>
+
+<div style="position:relative; width:1440px; height:900px; background:#121127; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+
+  <!-- step indicator -->
+  <div style="display:flex; align-items:center; gap:8px; margin-bottom:28px;">
+    <div style="width:22px; height:22px; border-radius:50%; background:#5b47e0; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;">1</div>
+    <span style="font-size:13px; color:#ffffff; font-weight:600;">계정 유형</span>
+    <div style="width:28px; height:1px; background:#3a3860;"></div>
+    <div style="width:22px; height:22px; border-radius:50%; background:#3a3860; color:#9a97b8; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;">2</div>
+    <span style="font-size:13px; color:#9a97b8; font-weight:500;">채널 연동</span>
+  </div>
+
+  <h1 style="margin:0 0 8px; font-size:26px; font-weight:700; color:#ffffff; text-align:center;">어떻게 시작하시나요?</h1>
+  <p style="margin:0 0 40px; font-size:14px; color:#9a97b8;">나중에 언제든 변경할 수 있어요</p>
+
+  <div style="display:flex; gap:20px;">
+
+    <!-- 개인 - selected -->
+    <div class="opt-card" style="width:340px; background:#ffffff; border:2px solid #5b47e0; border-radius:14px; padding:28px; box-shadow:0 0 0 4px rgba(91,71,224,0.15);">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
+        <div style="width:44px; height:44px; border-radius:10px; background:#efecfd; display:flex; align-items:center; justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5b47e0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+          </svg>
+        </div>
+        <div style="width:22px; height:22px; border-radius:50%; background:#5b47e0; display:flex; align-items:center; justify-content:center;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
+      <h3 style="margin:0 0 6px; font-size:17px; font-weight:700; color:#17171f;">개인으로 시작</h3>
+      <p style="margin:0 0 16px; font-size:13px; line-height:1.6; color:#6b6b78;">내가 운영하는 채널을 직접 관리해요</p>
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#5b47e0; font-weight:600;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5b47e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        채널 1개부터 바로 시작
+      </div>
+    </div>
+
+    <!-- 법인/팀 -->
+    <div class="opt-card" style="width:340px; background:#1a1932; border:2px solid #322f57; border-radius:14px; padding:28px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
+        <div style="width:44px; height:44px; border-radius:10px; background:#2a2850; display:flex; align-items:center; justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b8b6c9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7" width="7" height="14"/>
+            <rect x="14" y="3" width="7" height="18"/>
+            <line x1="6" y1="11" x2="7" y2="11"/>
+            <line x1="6" y1="15" x2="7" y2="15"/>
+          </svg>
+        </div>
+        <div style="width:22px; height:22px; border-radius:50%; border:2px solid #4a4770;"></div>
+      </div>
+      <h3 style="margin:0 0 6px; font-size:17px; font-weight:700; color:#ffffff;">법인·팀으로 시작</h3>
+      <p style="margin:0 0 16px; font-size:13px; line-height:1.6; color:#9a97b8;">여러 채널을 팀원과 함께 관리해요</p>
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#9a97b8; font-weight:600;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a97b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        구성원 초대 및 권한 설정 가능
+      </div>
+    </div>
+  </div>
+
+  <button style="margin-top:36px; width:340px; height:50px; background:#5b47e0; border:none; border-radius:10px; color:#ffffff; font-size:15px; font-weight:600; cursor:pointer;">다음</button>
+</div>
+</x-dc>
+
+<script>
+/* 시안을 클릭해 넘길 수 있게 붙인 얇은 이동 스크립트. 디자인은 손대지 않는다.
+   버튼/링크는 텍스트만 맞으면 잡고, div·span 은 잎사귀 수준일 때만 잡는다
+   (텍스트가 같은 큰 컨테이너를 실수로 잡지 않으려고). */
+(function () {
+  var NEXT = "/onboarding/3", CTA = "\ub2e4\uc74c", NAV = {"대시보드":"/app#/dashboard","채널 관리":"/onboarding/3","관리 기준":"/app#/rules","처리 이력":"/app#/history"};
+  function go(url) { return function (e) { e.preventDefault(); e.stopPropagation(); location.href = url; }; }
+  function bind(el, url) { el.style.cursor = "pointer"; el.addEventListener("click", go(url)); }
+
+  var all = document.querySelectorAll("button,a,div,span");
+  var found = 0;
+  for (var i = 0; i < all.length; i++) {
+    var el = all[i], tag = el.tagName.toLowerCase();
+    var t = (el.textContent || "").replace(/\s+/g, " ").trim();
+    var leafish = tag === "button" || tag === "a" || el.children.length <= 1;
+    if (!leafish) continue;
+    if (t === CTA) { bind(el, NEXT); found++; }
+    else if (NAV[t]) { bind(el, NAV[t]); }
+  }
+  // 버튼을 못 찾았으면 프로토타입이 막힌다. 눈에 보이는 안내를 띄운다.
+  if (!found) {
+    var b = document.createElement("div");
+    b.textContent = "다음 →";
+    b.style.cssText = "position:fixed;right:22px;bottom:22px;background:#17171f;color:#fff;" +
+      "padding:12px 20px;border-radius:10px;font:600 14px system-ui;cursor:pointer;z-index:9999";
+    b.onclick = function () { location.href = NEXT; };
+    document.body.appendChild(b);
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === "ArrowRight") location.href = NEXT;
+  });
+})();
+</script>
+
+
+<script>
+/* 시연용 선택 표시. 값은 저장되지 않는다 (로그인·워크스페이스가 아직 없다). */
+(function () {
+  var cards = document.querySelectorAll(".opt-card");
+  if (cards.length !== 2) return;
+  // 시안이 흰 카드 + 어두운 카드라 미선택 테두리 색이 서로 다르다.
+  var DIM = ["#e4e4ea", "#322f57"], DOT = ["#d4d4de", "#4a4770"];
+  var CHECK = "<svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg>";
+
+  function dot(card) {
+    var ds = card.getElementsByTagName("div");
+    for (var i = 0; i < ds.length; i++) {
+      if ((ds[i].getAttribute("style") || "").indexOf("width:22px") >= 0) return ds[i];
+    }
+    return null;
+  }
+  function pick(sel) {
+    for (var j = 0; j < cards.length; j++) {
+      var on = j === sel, c = cards[j];
+      c.style.border = "2px solid " + (on ? "#5b47e0" : DIM[j]);
+      c.style.boxShadow = on ? "0 0 0 4px rgba(91,71,224,0.15)" : "none";
+      var d = dot(c);
+      if (d) {
+        d.outerHTML = on
+          ? '<div style="width:22px; height:22px; border-radius:50%; background:#5b47e0;' +
+            ' display:flex; align-items:center; justify-content:center;">' + CHECK + "</div>"
+          : '<div style="width:22px; height:22px; border-radius:50%; border:2px solid ' +
+            DOT[j] + ';"></div>';
+      }
+    }
+  }
+  for (var j = 0; j < cards.length; j++) {
+    (function (k) { cards[k].addEventListener("click", function () { pick(k); }); })(j);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>채널 연결 요청 · Outlier</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="auth">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-ring" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#fdc830"/><stop offset=".35" stop-color="#f37335"/>
+      <stop offset=".65" stop-color="#e1306c"/><stop offset="1" stop-color="#833ab4"/>
+    </linearGradient>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="solo">
+  <div class="card">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 28 28" aria-hidden="true">
+        <circle class="d" cx="6" cy="9" r="2.6"/><circle class="d" cx="13" cy="6" r="2.6"/>
+        <circle class="d" cx="8" cy="16.5" r="2.6"/><circle class="d" cx="15.5" cy="15" r="2.6"/>
+        <circle cx="22" cy="22" r="4.2" fill="url(#g-ring)"/>
+      </svg>
+      <span>Outlier</span>
+    </a>
+    <div id="root"><p style="margin-top:20px">확인 중…</p></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById("root");
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]; }); };
+  var tick = '<svg class="i" aria-hidden="true"><use href="#i-check"/></svg>';
+  var path = location.pathname.replace(/\/+$/, "");
+  var q = new URLSearchParams(location.search);
+
+  var ERR = {
+    cancelled: "권한 주기를 취소하셨습니다. 다시 하려면 받은 링크를 다시 열어주세요.",
+    access_denied: "구글에서 거부됐습니다. 이 앱은 아직 검증 전이라 등록된 테스트 계정만 됩니다. 관리자에게 알려주세요.",
+    no_refresh_token: "이미 전에 권한을 준 계정입니다. 구글 계정 설정 → 보안 → 서드파티 앱에서 Outlier 접근을 지운 뒤 다시 해주세요.",
+    no_channel: "고른 구글 계정에 유튜브 채널이 없습니다. 채널이 있는 계정으로 다시 해주세요.",
+    already_connected: "이 채널은 이미 다른 곳에 연결되어 있습니다. 관리자에게 알려주세요.",
+    invite_invalid: "이 링크는 쓸 수 없습니다 (이미 사용됐거나 기한이 지났습니다). 관리자에게 새 링크를 요청하세요.",
+    google_failed: "구글과 통신하지 못했습니다. 잠시 뒤 받은 링크를 다시 열어주세요.",
+    expired: "연결 시간이 지났습니다 (구글 화면에서 10분 넘게 머물렀거나 서버가 재시작됨). 받은 링크를 다시 열어주세요."
+  };
+
+  if (path === "/connect/done") {
+    var n = q.get("connected"), e = q.get("error");
+    if (n && !e) {
+      root.innerHTML =
+        '<h1>연결됐습니다</h1>' +
+        '<div class="msg ok">채널 ' + esc(n) + '개가 관리자 워크스페이스에 연결되었습니다.</div>' +
+        '<p style="margin-top:16px">이제 이 창을 닫아도 됩니다. 관리자가 댓글 관리를 시작하려면 <b>AI 판별 동의</b>를 켜야 하고, 그건 관리자 화면에서 합니다.</p>' +
+        '<p class="muted" style="text-align:left">권한을 거두고 싶으면 구글 계정 설정 → 보안 → 서드파티 앱에서 언제든 지울 수 있습니다.</p>';
+    } else {
+      root.innerHTML = '<h1>연결되지 않았습니다</h1><div class="msg err">' + esc(ERR[e] || e || "알 수 없는 오류") + '</div>';
+    }
+    return;
+  }
+
+  var token = path.split("/").pop();
+  fetch("/api/channels/invites/" + encodeURIComponent(token) + "/info")
+    .then(function (r) { return r.json(); })
+    .then(function (info) {
+      if (!info.valid) {
+        root.innerHTML = '<h1>쓸 수 없는 링크</h1><div class="msg err">' + esc(info.reason) + '</div>';
+        return;
+      }
+      root.innerHTML =
+        '<h1>유튜브 채널 연결 요청</h1>' +
+        '<div class="who"><b>' + esc(info.inviter_name) + '</b> 님(' + esc(info.workspace_name) + ')이 ' +
+        '회원님 채널의 댓글 관리를 맡기 위해 권한을 요청했습니다.</div>' +
+        '<p>아래 버튼을 누르면 구글 화면이 열립니다. <b>채널이 있는 구글 계정</b>을 고르고 YouTube 권한을 허용해 주세요. Outlier 에 가입하거나 로그인할 필요는 없습니다.</p>' +
+        '<ul>' +
+        '<li>' + tick + '<span>관리자는 댓글을 <b>가리기(숨김)</b>, 유지, 작성자 차단할 수 있게 됩니다.</span></li>' +
+        '<li>' + tick + '<span>영상 업로드·삭제, 수익, 채널 설정에는 손댈 수 없습니다.</span></li>' +
+        '<li>' + tick + '<span>권한은 구글 계정 설정에서 언제든 거둘 수 있습니다.</span></li>' +
+        '</ul>' +
+        '<a class="btn primary lg block" href="/api/channels/connect/invite/' + encodeURIComponent(token) + '">' +
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M21.6 7.2s-.2-1.5-.8-2.2c-.8-.8-1.7-.8-2.1-.9C15.9 4 12 4 12 4s-3.9 0-6.7.1c-.4 0-1.3.1-2.1.9-.6.7-.8 2.2-.8 2.2S2.2 9 2.2 10.8v1.4C2.2 14 2.4 15.8 2.4 15.8s.2 1.5.8 2.2c.8.8 1.9.8 2.3.9 1.7.2 7.5.2 7.5.2s3.9 0 6.7-.1c.4 0 1.3-.1 2.1-.9.6-.7.8-2.2.8-2.2s.2-1.8.2-3.6v-1.4c0-1.8-.2-3.6-.2-3.6z"/><path d="M9.8 15V9l5.4 3z" fill="#0866ff"/></svg>' +
+        '구글로 채널 권한 주기</a>' +
+        '<div class="muted">이 링크는 한 번만 쓸 수 있고 ' + esc(new Date(info.expires_at + "Z").toLocaleDateString("ko-KR")) + '까지 유효합니다.</div>';
+    })
+    .catch(function () { root.innerHTML = '<div class="msg err" style="margin-top:20px">서버에 연결하지 못했습니다.</div>'; });
+})();
+</script>
+</body>
+</html>

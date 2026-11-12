@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Veil — 댓글 관리</title>
+<link rel="icon" href="/static/img/veil-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Outfit:wght@600&family=Geist+Mono:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/static/veil.css">
+</head>
+<body>
+
+<div class="layout">
+  <aside class="side">
+    <a class="brand" href="#/queue" aria-label="Veil 홈">
+      <img src="/static/img/veil-icon.svg" alt="" width="44" height="44">
+      <span>Veil</span>
+    </a>
+
+    <!-- 메뉴. 배지는 app.js 의 paintNav 가 채운다. -->
+    <nav class="nav" id="nav" aria-label="주 메뉴">
+      <a href="#/queue" data-feed>검토 피드<span class="badge q" id="badge" hidden></span></a>
+      <a href="#/dashboard">인사이트</a>
+      <a href="#/history">활동</a>
+      <a href="#/evidence">증거 보관함</a>
+      <a href="#/rules">관리 기준</a>
+      <a href="#/prompt">AI 프롬프트</a>
+      <a href="#/monitor">자동 감지</a>
+      <a href="#/channels">채널</a>
+    </nav>
+
+    <div class="grow"></div>
+    <!-- 지금 보는 채널 + 워크스페이스. 누르면 채널 바꾸기 · 채널 추가 · 로그아웃 메뉴가 뜬다. -->
+    <div class="me-wrap">
+      <div class="menu" id="menu" role="menu" aria-label="채널과 계정" hidden></div>
+      <button class="me" id="me" aria-haspopup="menu" aria-expanded="false" aria-controls="menu">
+        <span class="av" id="me-av">·</span>
+        <span class="tx">
+          <span class="n" id="me-name">불러오는 중</span>
+          <span class="t" id="me-ws">&nbsp;</span>
+        </span>
+        <svg class="chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 10l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div id="view" class="wrap w1120"></div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

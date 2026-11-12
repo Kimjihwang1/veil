@@ -1,0 +1,6 @@
+# SITE_ADDRESS 가 "example.com" 이면 https 를 자동으로 켠다 (Let's Encrypt).
+# ":80" 이면 그냥 http. 도메인이 생기면 .env 의 SITE_ADDRESS 만 바꾸고 caddy 를 재시작.
+{$SITE_ADDRESS}
+
+encode gzip
+reverse_proxy app:8000

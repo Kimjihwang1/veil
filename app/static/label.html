@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>댓글 라벨링 · Outlier</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-ring" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#fdc830"/><stop offset=".35" stop-color="#f37335"/>
+      <stop offset=".65" stop-color="#e1306c"/><stop offset="1" stop-color="#833ab4"/>
+    </linearGradient>
+  </defs>
+</svg>
+<div class="lab" id="root"></div>
+
+<script>
+/* 라벨링 화면. AI 판정은 여기 어디에도 안 옵니다 — API 가 안 보냅니다.
+ * 누르는 사람이 보는 건 관리자가 보는 것과 같습니다: 영상 제목, 부모 댓글, 본문. */
+
+const $ = (s) => document.querySelector(s);
+const root = $("#root");
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) =>
+  ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const hue = (s) => { let h = 0; for (const ch of String(s || "?")) h = (h * 31 + ch.codePointAt(0)) % 360; return h; };
+const brand = `<a class="brand" href="/label" aria-label="Outlier 라벨링">
+  <svg viewBox="0 0 28 28" aria-hidden="true">
+    <circle class="d" cx="6" cy="9" r="2.6"/><circle class="d" cx="13" cy="6" r="2.6"/>
+    <circle class="d" cx="8" cy="16.5" r="2.6"/><circle class="d" cx="15.5" cy="15" r="2.6"/>
+    <circle cx="22" cy="22" r="4.2" fill="url(#g-ring)"/></svg><span>Outlier</span></a>`;
+
+// 팀 비밀번호. 서버가 LABEL_KEY 를 두면 없이는 401. 한 번 맞으면 이 브라우저에 기억.
+let labelKey = null; try { labelKey = localStorage.getItem("labelKey"); } catch {}
+
+async function api(path, opts) {
+  const r = await fetch("/api/label" + path, {
+    headers: { "Content-Type": "application/json", ...(labelKey ? { "X-Label-Key": labelKey } : {}) },
+    ...opts,
+  });
+  if (r.status === 401) {
+    const k = prompt("팀 비밀번호를 입력하세요");
+    if (k === null) throw new Error("비밀번호가 필요합니다");
+    labelKey = k; try { localStorage.setItem("labelKey", k); } catch {}
+    return api(path, opts);
+  }
+  if (!r.ok) throw new Error(`${r.status} ${(await r.text()).slice(0, 120)}`);
+  return r.json();
+}
+
+let who = null;
+let shownAt = 0;
+let current = null;
+
+function pickWho(list) {
+  root.innerHTML = `
+    <div class="top">${brand}</div>
+    <h1>댓글 라벨링</h1>
+    <div class="sub">누구세요?</div>
+    <div class="who-list">
+      ${list.map(l => `<button data-who="${esc(l.name)}">
+          <div class="av sm" style="--h:${hue(l.name)}">${esc([...l.name][0] || "?")}</div>${esc(l.name)}
+          <span>${l.done} / ${l.total}</span></button>`).join("")}
+    </div>
+    <div class="note">
+      영상 제목과 부모 댓글을 보고, <b>이 채널 관리자라면</b> 이 댓글을 어떻게 할지 누르세요.<br>
+      정답이 있는 게 아닙니다. 고민되면 <b>모르겠음</b>이 맞는 답입니다 — 그게 우리가 알아야 하는 것입니다.<br>
+      중간에 나가도 이어서 됩니다. 키보드 <kbd>1</kbd> 숨김 <kbd>2</kbd> 유지 <kbd>3</kbd> 모르겠음
+    </div>`;
+  root.querySelectorAll("[data-who]").forEach(b => b.onclick = () => {
+    who = b.dataset.who;
+    try { localStorage.setItem("labeler", who); } catch {}
+    load();
+  });
+}
+
+async function load() {
+  let t;
+  try { t = await api(`/next?who=${encodeURIComponent(who)}`); }
+  catch (e) { root.innerHTML = `<div class="msg err">불러오지 못했습니다: ${esc(e.message)}</div>`; return; }
+  current = t;
+  const pct = t.total ? (t.done / t.total * 100) : 0;
+
+  if (!t.task_id) {
+    root.innerHTML = `
+      <div class="top">${brand}</div>
+      <h1>댓글 라벨링</h1>
+      <div class="sub">${esc(who)}</div>
+      <div class="card done" style="margin-top:16px">
+        <div class="big">🎉</div>
+        <div><b>${t.total}건 전부 끝났습니다.</b> 고생하셨습니다.</div>
+        ${t.last_task_id ? `<div class="undo" style="margin-top:18px"><a id="undo" href="#">마지막 것 취소</a></div>` : ""}
+      </div>`;
+    const u = $("#undo"); if (u) u.onclick = (e) => { e.preventDefault(); undo(); };
+    return;
+  }
+
+  const c = t.comment;
+  root.innerHTML = `
+    <div class="top">${brand}<div class="meta" style="gap:8px"><span>${esc(who)}</span></div></div>
+    <div class="meta"><span>${t.done + 1} / ${t.total}</span><span>${Math.round(pct)}%</span></div>
+    <div class="bar" role="progressbar" aria-valuenow="${Math.round(pct)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+    <div class="card">
+      ${c.channel_title || c.video_title
+        ? `<div class="vid">${esc(c.channel_title || "")}${c.channel_title && c.video_title ? " · " : ""}${esc(c.video_title || "")}</div>`
+        : ""}
+      ${c.parent_content ? `<div class="parent">↳ ${esc(c.parent_content).slice(0, 300)}</div>` : ""}
+      <div class="body">${esc(c.content)}</div>
+      <div class="q">이 채널 관리자라면?</div>
+      <div class="acts3">
+        <button class="hide"   data-l="hide">숨김<small>1</small></button>
+        <button class="keep"   data-l="keep">유지<small>2</small></button>
+        <button class="unsure" data-l="unsure">모르겠음<small>3</small></button>
+      </div>
+      ${t.last_task_id ? `<div class="undo"><a id="undo" href="#">직전 답 취소</a></div>` : ""}
+    </div>`;
+  shownAt = performance.now();
+  root.querySelectorAll("[data-l]").forEach(b => b.onclick = () => answer(b.dataset.l));
+  const u = $("#undo"); if (u) u.onclick = (e) => { e.preventDefault(); undo(); };
+}
+
+let busy = false;
+async function answer(label) {
+  if (busy || !current?.task_id) return;
+  busy = true;
+  const seconds = Math.round((performance.now() - shownAt) / 100) / 10;
+  try { await api(`/${current.task_id}`, { method:"POST", body: JSON.stringify({ label, seconds }) }); }
+  catch (e) { alert("저장 실패: " + e.message); busy = false; return; }
+  busy = false;
+  load();
+}
+
+async function undo() {
+  if (busy || !current?.last_task_id) return;
+  busy = true;
+  try { await api(`/${current.last_task_id}/undo`, { method:"POST" }); }
+  catch (e) { alert("취소 실패: " + e.message); }
+  busy = false;
+  load();
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!current?.task_id) return;
+  if (e.key === "1") answer("hide");
+  else if (e.key === "2") answer("keep");
+  else if (e.key === "3") answer("unsure");
+});
+
+(async () => {
+  let list;
+  try { list = await api("/labelers"); }
+  catch (e) { root.innerHTML = `<div class="msg err">서버에 연결되지 않습니다: ${esc(e.message)}</div>`; return; }
+  if (!list.length) {
+    root.innerHTML = `<div class="msg err">배정된 작업이 없습니다. <code>python -m scripts.make_label_tasks</code> 를 먼저 돌려야 합니다.</div>`;
+    return;
+  }
+  let saved = null; try { saved = localStorage.getItem("labeler"); } catch {}
+  if (saved && list.some(l => l.name === saved)) { who = saved; load(); }
+  else pickWho(list);
+})();
+</script>
+</body>
+</html>

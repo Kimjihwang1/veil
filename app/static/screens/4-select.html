@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'IBM Plex Sans KR', 'Malgun Gothic', sans-serif; }
+  .nav-item { display:flex; align-items:center; gap:11px; padding:9px 14px; border-radius:8px; font-size:13.5px; font-weight:500; }
+  .ch-row { display:flex; align-items:center; padding:16px 18px; border-bottom:1px solid #eeeef2; }
+</style>
+</helmet>
+
+<div style="width:1440px; height:900px; background:#f7f7fa; display:flex;">
+
+  <!-- SIDEBAR -->
+  <div style="width:240px; min-width:240px; height:900px; background:#121127; display:flex; flex-direction:column; padding:20px 14px;">
+    <div style="display:flex; align-items:center; gap:9px; padding:6px 8px 22px;">
+      <svg width="22" height="22" viewBox="0 0 26 26">
+        <circle cx="6" cy="8" r="2.4" fill="#66638a"/><circle cx="12" cy="6" r="2.4" fill="#66638a"/>
+        <circle cx="7" cy="15" r="2.4" fill="#66638a"/><circle cx="14" cy="14" r="2.4" fill="#66638a"/>
+        <circle cx="21" cy="21" r="3.4" fill="#8f7ef5"/>
+      </svg>
+      <span style="font-size:16px; font-weight:700; color:#ffffff;">Outlier</span>
+    </div>
+    <div class="nav-item" style="color:#9a97b8;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      대시보드
+    </div>
+    <div class="nav-item" style="background:#242145; color:#ffffff;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>
+      채널 관리
+    </div>
+    <div class="nav-item" style="color:#9a97b8;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2" fill="#121127"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="16" cy="12" r="2" fill="#121127"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2" fill="#121127"/></svg>
+      관리 기준
+    </div>
+    <div class="nav-item" style="color:#9a97b8;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+      처리 이력
+    </div>
+    <div style="flex:1;"></div>
+    <div class="nav-item" style="color:#9a97b8;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.55V21a2 2 0 11-4 0v-.09a1.7 1.7 0 00-1-1.55 1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.7 1.7 0 00.34-1.87 1.7 1.7 0 00-1.55-1H3a2 2 0 110-4h.09a1.7 1.7 0 001.55-1 1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06a1.7 1.7 0 001.87.34H9a1.7 1.7 0 001-1.55V3a2 2 0 114 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06a1.7 1.7 0 00-.34 1.87V9a1.7 1.7 0 001.55 1H21a2 2 0 110 4h-.09a1.7 1.7 0 00-1.55 1z"/></svg>
+      설정
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; margin-top:14px; padding:10px 8px; border-top:1px solid #262445;">
+      <div style="width:30px; height:30px; border-radius:50%; background:#5b47e0; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;">박</div>
+      <div><div style="font-size:12.5px; font-weight:600; color:#ffffff;">박승민</div><div style="font-size:11px; color:#75718f;">Outlier 팀</div></div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1; display:flex; flex-direction:column;">
+    <div style="height:64px; min-height:64px; border-bottom:1px solid #e4e4ea; display:flex; align-items:center; padding:0 28px; background:#ffffff; gap:10px;">
+      <span style="font-size:13.5px; color:#9a9aa6;">채널 관리</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9a9aa6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      <span style="font-size:15px; font-weight:700; color:#17171f;">채널 연결</span>
+    </div>
+
+    <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+      <div style="width:640px; background:#ffffff; border:1px solid #e4e4ea; border-radius:16px; overflow:hidden;">
+        <div style="padding:22px 24px 18px;">
+          <h2 style="margin:0 0 4px; font-size:17px; font-weight:700; color:#17171f;">연동할 채널 선택</h2>
+          <p style="margin:0; font-size:13px; color:#6b6b78;">example.channel@gmail.com 계정에서 3개 채널을 찾았어요</p>
+        </div>
+
+        <div class="ch-row">
+          <div style="width:44px; height:44px; border-radius:50%; background:#ffe1c2; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:#b8641a;">먹</div>
+          <div style="flex:1; margin-left:14px;">
+            <div style="font-size:14.5px; font-weight:600; color:#17171f;">오늘의 먹방 <span style="font-weight:400; color:#9a9aa6; font-size:12px;">(샘플)</span></div>
+            <div style="font-size:12.5px; color:#9a9aa6;">구독자 12.4만명</div>
+          </div>
+          <div style="width:22px; height:22px; border-radius:6px; background:#5b47e0; display:flex; align-items:center; justify-content:center;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+
+        <div class="ch-row">
+          <div style="width:44px; height:44px; border-radius:50%; background:#d7e8ff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:#2563a8;">게</div>
+          <div style="flex:1; margin-left:14px;">
+            <div style="font-size:14.5px; font-weight:600; color:#17171f;">게임 채널 GG <span style="font-weight:400; color:#9a9aa6; font-size:12px;">(샘플)</span></div>
+            <div style="font-size:12.5px; color:#9a9aa6;">구독자 4.8만명</div>
+          </div>
+          <div style="width:22px; height:22px; border-radius:6px; background:#5b47e0; display:flex; align-items:center; justify-content:center;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+
+        <div class="ch-row" style="border-bottom:none;">
+          <div style="width:44px; height:44px; border-radius:50%; background:#e4e4ea; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:#6b6b78;">브</div>
+          <div style="flex:1; margin-left:14px;">
+            <div style="font-size:14.5px; font-weight:600; color:#17171f;">브이로그 <span style="font-weight:400; color:#9a9aa6; font-size:12px;">(샘플)</span></div>
+            <div style="font-size:12.5px; color:#9a9aa6;">구독자 9,200명</div>
+          </div>
+          <div style="width:22px; height:22px; border-radius:6px; border:1.6px solid #d4d4de;"></div>
+        </div>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 24px; border-top:1px solid #eeeef2; background:#fafafc;">
+          <span style="font-size:12.5px; color:#6b6b78;">2개 채널 선택됨</span>
+          <button style="height:42px; padding:0 20px; background:#5b47e0; border:none; border-radius:9px; color:#ffffff; font-size:13.5px; font-weight:600; cursor:pointer;">선택한 채널 연동하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script>
+/* 시안을 클릭해 넘길 수 있게 붙인 얇은 이동 스크립트. 디자인은 손대지 않는다.
+   버튼/링크는 텍스트만 맞으면 잡고, div·span 은 잎사귀 수준일 때만 잡는다
+   (텍스트가 같은 큰 컨테이너를 실수로 잡지 않으려고). */
+(function () {
+  var NEXT = "/onboarding/5", CTA = "\uc120\ud0dd\ud55c \ucc44\ub110 \uc5f0\ub3d9\ud558\uae30", NAV = {"대시보드":"/app#/dashboard","채널 관리":"/onboarding/6","관리 기준":"/app#/rules","처리 이력":"/app#/history"};
+  function go(url) { return function (e) { e.preventDefault(); e.stopPropagation(); location.href = url; }; }
+  function bind(el, url) { el.style.cursor = "pointer"; el.addEventListener("click", go(url)); }
+
+  var all = document.querySelectorAll("button,a,div,span");
+  var found = 0;
+  for (var i = 0; i < all.length; i++) {
+    var el = all[i], tag = el.tagName.toLowerCase();
+    var t = (el.textContent || "").replace(/\s+/g, " ").trim();
+    var leafish = tag === "button" || tag === "a" || el.children.length <= 1;
+    if (!leafish) continue;
+    if (t === CTA) { bind(el, NEXT); found++; }
+    else if (NAV[t]) { bind(el, NAV[t]); }
+  }
+  // 버튼을 못 찾았으면 프로토타입이 막힌다. 눈에 보이는 안내를 띄운다.
+  if (!found) {
+    var b = document.createElement("div");
+    b.textContent = "다음 →";
+    b.style.cssText = "position:fixed;right:22px;bottom:22px;background:#17171f;color:#fff;" +
+      "padding:12px 20px;border-radius:10px;font:600 14px system-ui;cursor:pointer;z-index:9999";
+    b.onclick = function () { location.href = NEXT; };
+    document.body.appendChild(b);
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === "ArrowRight") location.href = NEXT;
+  });
+})();
+</script>
+
+
+<script>
+/* 시연용 선택 표시. 실제 연동은 YouTube OAuth 가 붙어야 한다. */
+(function () {
+  var rows = document.querySelectorAll(".ch-row");
+  if (!rows.length) return;
+  var CHECK = "<svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg>";
+  var on = [];
+
+  function boxOf(row) {
+    var ds = row.getElementsByTagName("div");
+    for (var i = ds.length - 1; i >= 0; i--) {
+      if ((ds[i].getAttribute("style") || "").indexOf("width:22px") >= 0) return ds[i];
+    }
+    return null;
+  }
+  function label() {
+    var n = 0;
+    for (var i = 0; i < on.length; i++) if (on[i]) n++;
+    var spans = document.getElementsByTagName("span");
+    for (var i = 0; i < spans.length; i++) {
+      if (/채널 선택됨$/.test((spans[i].textContent || "").trim())) {
+        spans[i].textContent = n + "개 채널 선택됨";
+      }
+    }
+  }
+  function draw(i) {
+    var b = boxOf(rows[i]);
+    if (!b) return;
+    b.outerHTML = on[i]
+      ? '<div style="width:22px; height:22px; border-radius:6px; background:#5b47e0;' +
+        ' display:flex; align-items:center; justify-content:center;">' + CHECK + "</div>"
+      : '<div style="width:22px; height:22px; border-radius:6px; border:1.6px solid #d4d4de;"></div>';
+  }
+  for (var i = 0; i < rows.length; i++) {
+    var b = boxOf(rows[i]);
+    on.push(!!(b && (b.getAttribute("style") || "").indexOf("#5b47e0") >= 0));
+    rows[i].style.cursor = "pointer";
+    (function (k) {
+      rows[k].addEventListener("click", function () { on[k] = !on[k]; draw(k); label(); });
+    })(i);
+  }
+  label();
+})();
+</script>
+</body>
+</html>

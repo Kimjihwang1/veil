@@ -1,0 +1,59 @@
+# 서버 한 대에 올리는 구성. 이 폴더에서 `docker compose up -d --build`.
+#
+#   db     PostgreSQL 17 + pgvector. 데이터는 볼륨 pgdata 에 남는다.
+#   app    FastAPI. 매시간 감시(watcher) · 매일 파기(retention) 가 안에서 돈다.
+#   caddy  80/443. SITE_ADDRESS 가 도메인이면 https 인증서를 알아서 받는다.
+#          도메인이 아직 없으면 ":80" 으로 두면 IP 로 http 접속이 된다.
+#
+# 비밀값은 전부 이 폴더의 .env 에 있다 (레포에 없음). deploy/.env.example 참고.
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    # 바깥에 포트를 열지 않는다. 앱 컨테이너만 접속한다.
+
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8000"
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
